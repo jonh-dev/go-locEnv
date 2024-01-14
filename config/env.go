@@ -220,7 +220,6 @@ func (f *FileEnvLoader) loadEnvFile(envFile string) error {
 		return fmt.Errorf("erro ao carregar variáveis de ambiente: %s", err.Error())
 	}
 
-	logger.Success(fmt.Sprintf("Ambiente de %s carregado", f.Env))
 	return nil
 }
 
