@@ -1,0 +1,4 @@
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
+github.com/jonh-dev/go-logger v0.0.0-20240106071918-32ecc05d85ca h1:yYmd8+TG8DDbhzMmSd6jIZPMcnDr8IR0wMpMo9zNJ2Y=
+github.com/jonh-dev/go-logger v0.0.0-20240106071918-32ecc05d85ca/go.mod h1:4fan/h34H3BR8NEclu9fNjl4yeKJhnlZPlCZYHMilaM=
