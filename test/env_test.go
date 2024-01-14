@@ -39,7 +39,7 @@ func TestLoadEnv(t *testing.T) {
 	}
 
 	// Define a variável de ambiente GO_ENV para "test"
-	os.Setenv("GO_ENV", "test")
+	os.Setenv("APP_ENV", "test")
 
 	// Altera o diretório de trabalho para o diretório temporário
 	os.Chdir(tmpDir)
@@ -99,7 +99,7 @@ func TestLoadEnvInSubdirectory(t *testing.T) {
 	}
 
 	// Define a variável de ambiente GO_ENV para "test"
-	os.Setenv("GO_ENV", "test")
+	os.Setenv("APP_ENV", "test")
 
 	// Altera o diretório de trabalho para o subdiretório
 	os.Chdir(subDir)
