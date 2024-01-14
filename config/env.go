@@ -64,8 +64,6 @@ Finalmente, ele retorna o valor de GO_ENV.
 */
 func getEnvironment() string {
 	env := os.Getenv("APP_ENV")
-	productionWarning(env)
-	developmentProfile(env)
 	return env
 }
 
@@ -235,32 +233,4 @@ A função GetEnv retorna o valor do campo Env da estrutura FileEnvLoader, que f
 */
 func (f *FileEnvLoader) GetEnv() string {
 	return f.Env
-}
-
-/*
-productionWarning exibe um aviso se o ambiente atual for "production" ou "prod"
-
-A função productionWarning verifica se o ambiente atual é "production" ou "prod".
-Se for, ela registra uma mensagem de aviso indicando que o ambiente de produção está sendo usado.
-
-@param Environment string - O ambiente atual, que é verificado para ver se é "production" ou "prod"
-*/
-func productionWarning(Environment string) {
-	if Environment == "production" || Environment == "prod" {
-		logger.Warning("Você está rodando em produção")
-	}
-}
-
-/*
-developmentProfile exibe uma mensagem informativa se o ambiente atual for "development", "dev" ou vazio
-
-A função developmentProfile verifica se o ambiente atual é "development", "dev" ou vazio.
-Se for, ela registra uma mensagem informativa indicando que o ambiente de desenvolvimento está sendo usado.
-
-@param Environment string - O ambiente atual, que é verificado para ver se é "development", "dev" ou vazio
-*/
-func developmentProfile(Environment string) {
-	if Environment == "development" || Environment == "dev" || Environment == "" {
-		logger.Info("Você está rodando em desenvolvimento")
-	}
 }
