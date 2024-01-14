@@ -60,7 +60,7 @@ Finalmente, ele retorna o valor de GO_ENV.
 @return string - O valor da variável de ambiente GO_ENV
 */
 func getEnvironment() string {
-	env := os.Getenv("GO_ENV")
+	env := os.Getenv("APP_ENV")
 	productionWarning(env)
 	developmentProfile(env)
 	return env
