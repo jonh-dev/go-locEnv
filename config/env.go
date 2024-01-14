@@ -86,11 +86,11 @@ func (f *FileEnvLoader) LoadEnv() error {
 }
 
 /*
-findEnvFile procura um arquivo .env no diretório atual e em todos os subdiretórios
+findEnvFile é um método da estrutura FileEnvLoader que procura um arquivo .env no diretório atual e nos diretórios pais.
 
-A função findEnvFile usa a função filepath.Walk para percorrer todos os arquivos no diretório atual e em todos os subdiretórios.
-Para cada arquivo que encontra, verifica se o nome do arquivo começa com ".env.".
-Se encontrar um arquivo que corresponda a esse padrão, define filePath para o caminho do arquivo e env para o ambiente correspondente (que é a parte do nome do arquivo após ".env.").
+O método começa obtendo o diretório de trabalho atual. Se houver um erro ao obter o diretório de trabalho atual, o método retorna uma string vazia para o caminho do arquivo e o ambiente.
+
+Em seguida, o método chama a função searchInCurrentAndParentDirectories, passando o diretório de trabalho atual. Esta função procura um arquivo .env no diretório atual e nos diretórios pais, retornando o caminho do arquivo e o ambiente correspondente.
 
 @return string - O caminho do arquivo .env encontrado
 @return string - O ambiente correspondente ao arquivo .env encontrado
@@ -99,7 +99,64 @@ func (f *FileEnvLoader) findEnvFile() (string, string) {
 	filePath := ""
 	env := ""
 
-	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+	currentDir, err := os.Getwd()
+	if err != nil {
+		return "", ""
+	}
+
+	filePath, env = f.searchInCurrentAndParentDirectories(currentDir)
+
+	return filePath, env
+}
+
+/*
+searchInCurrentAndParentDirectories é um método da estrutura FileEnvLoader que procura um arquivo .env no diretório atual e nos diretórios pais.
+
+O método recebe o diretório atual como argumento. Inicializa duas variáveis, filePath e env, para armazenar o caminho do arquivo .env encontrado e o ambiente correspondente.
+
+Em seguida, entra em um loop infinito. Dentro do loop, o método chama a função searchInDirectory, passando o diretório atual. Se um arquivo .env for encontrado, o loop é interrompido.
+
+Se nenhum arquivo .env for encontrado, o método obtém o diretório pai do diretório atual. Se o diretório pai for a raiz ("/") ou o diretório atual (".") o loop é interrompido.
+
+@return string - O caminho do arquivo .env encontrado
+@return string - O ambiente correspondente ao arquivo .env encontrado
+*/
+func (f *FileEnvLoader) searchInCurrentAndParentDirectories(currentDir string) (string, string) {
+	filePath := ""
+	env := ""
+
+	for {
+		filePath, env = f.searchInDirectory(currentDir)
+		if filePath != "" {
+			break
+		}
+
+		currentDir = filepath.Dir(currentDir)
+		if currentDir == "/" || currentDir == "." {
+			break
+		}
+	}
+
+	return filePath, env
+}
+
+/*
+searchInDirectory é um método da estrutura FileEnvLoader que procura um arquivo .env no diretório fornecido.
+
+O método recebe o diretório como argumento. Inicializa duas variáveis, filePath e env, para armazenar o caminho do arquivo .env encontrado e o ambiente correspondente.
+
+Em seguida, o método chama a função filepath.Walk, passando o diretório e uma função anônima. A função anônima é chamada para cada arquivo e diretório no diretório fornecido.
+
+Se o arquivo atual for um diretório, a função anônima retorna e passa para o próximo arquivo. Se o arquivo atual for um arquivo e seu nome começar com ".env.", a função anônima define filePath e env para o caminho do arquivo e o ambiente correspondente.
+
+@return string - O caminho do arquivo .env encontrado
+@return string - O ambiente correspondente ao arquivo .env encontrado
+*/
+func (f *FileEnvLoader) searchInDirectory(dir string) (string, string) {
+	filePath := ""
+	env := ""
+
+	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
