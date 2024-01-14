@@ -29,10 +29,10 @@ The following tools were used in building the project:
 
 **2.** Choose an IDE of your choice, in this case we will use Visual Studio Code. To download it follow the link: https://code.visualstudio.com/download
 
-**3.** Open your terminal and use `go get` to download and install the `go-envloader` library. Replace `github.com/jonh-dev/go-envloader` with the path to your `go-envloader` library:
+**3.** Open your terminal and use `go get` to download and install the `go-locEnv` library. Replace `github.com/jonh-dev/go-locEnv/config` with the path to your `go-envloader` library:
 
 ```bash
-$ go get github.com/jonh-dev/go-locEnv
+$ go get github.com/jonh-dev/go-locEnv/config
 ```
 
 **4.** Now you can import the go-envloader library into your Go project. Here's an example of how you can do this:
@@ -43,7 +43,7 @@ import (
 )
 ```
 
-**5.** Now you can use the go-envloader library in your code. Here’s an example of how you can do this:
+**5.** Now you can use the go-locEnv library in your code. Here’s an example of how you can do this:
 
 ```Go
 func main() {
