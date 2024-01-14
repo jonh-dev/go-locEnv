@@ -147,7 +147,7 @@ O método recebe o diretório como argumento. Inicializa duas variáveis, filePa
 
 Em seguida, o método chama a função filepath.Walk, passando o diretório e uma função anônima. A função anônima é chamada para cada arquivo e diretório no diretório fornecido.
 
-Se o arquivo atual for um diretório, a função anônima retorna e passa para o próximo arquivo. Se o arquivo atual for um arquivo e seu nome começar com ".env.", a função anônima define filePath e env para o caminho do arquivo e o ambiente correspondente.
+Se o arquivo atual for um diretório, a função anônima retorna e passa para o próximo arquivo. Se o arquivo atual for um arquivo e seu nome começar com ".env.", a função anônima verifica se o ambiente correspondente ao arquivo .env (obtido removendo ".env." do nome do arquivo) corresponde ao ambiente atual. Se corresponder, define filePath para o caminho do arquivo e env para o ambiente correspondente.
 
 @return string - O caminho do arquivo .env encontrado
 @return string - O ambiente correspondente ao arquivo .env encontrado
@@ -166,8 +166,10 @@ func (f *FileEnvLoader) searchInDirectory(dir string) (string, string) {
 		}
 
 		if strings.HasPrefix(info.Name(), ".env.") {
-			filePath = path
 			env = strings.TrimPrefix(info.Name(), ".env.")
+			if env == f.Env {
+				filePath = path
+			}
 		}
 
 		return nil
